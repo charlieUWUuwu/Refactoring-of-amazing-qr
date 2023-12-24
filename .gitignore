@@ -97,3 +97,7 @@ MANIFEST
 .idea
 .vscode
 
+*.png
+*.gif
+*.jpg
+*.pptx

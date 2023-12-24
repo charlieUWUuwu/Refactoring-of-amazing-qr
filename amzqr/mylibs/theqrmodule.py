@@ -1,13 +1,17 @@
 # -*- coding: utf-8 -*-
 
-from amzqr.mylibs import data, ECC, structure, matrix, draw
+from amzqr.mylibs import ECC, structure, matrix, draw
+from amzqr.mylibs.data.encoder_factory import QRCodeEncoderFactory
 
 # ver: Version from 1 to 40
 # ecl: Error Correction Level (L,M,Q,H)
+# str: words
 # get a qrcode picture of 3*3 pixels per module
 def get_qrcode(ver, ecl, str, save_place):
     # Data Coding
-    ver, data_codewords = data.encode(ver, ecl, str)
+    # ver, data_codewords = data.encode(ver, ecl, str)
+    encoder = QRCodeEncoderFactory.get_encoder(ver, ecl, str)
+    ver, data_codewords = encoder.encode(str)
 
     # Error Correction Coding
     ecc = ECC.encode(ver, ecl, data_codewords)
