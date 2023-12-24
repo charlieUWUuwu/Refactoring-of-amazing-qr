@@ -1,7 +1,7 @@
 from amzqr.mylibs.constant import alphanum_list
-from .base_encoder import base_encoder
+from .BaseEncoder import BaseEncoder
 
-class NumericEncoder(base_encoder):
+class NumericEncoder(BaseEncoder):
     def __init__(self, ver, ecl):
         super().__init__(ver, ecl, mode='numeric')
 
@@ -18,7 +18,7 @@ class NumericEncoder(base_encoder):
             code += ('0'*(rqbin_len - len(code_temp)) + code_temp)
         return code
 
-class AlphanumericEncoder(base_encoder):
+class AlphanumericEncoder(BaseEncoder):
     def __init__(self, ver, ecl):
         super().__init__(ver, ecl, mode='alphanumeric')
 
@@ -35,14 +35,14 @@ class AlphanumericEncoder(base_encoder):
             code += c
         return code
     
-class KanjiEncoder(base_encoder):
+class KanjiEncoder(BaseEncoder):
     def __init__(self, ver, ecl):
         super().__init__(ver, ecl, mode='kanji')
 
     def _get_code(self, str):
         pass
 
-class ByteEncoder(base_encoder):
+class ByteEncoder(BaseEncoder):
     def __init__(self, ver, ecl):
         super().__init__(ver, ecl, mode='byte')
 

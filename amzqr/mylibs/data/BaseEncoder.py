@@ -1,14 +1,18 @@
 from amzqr.mylibs.constant import required_bytes, mindex, lindex, grouping_list, mode_indicator
-from abc import ABC, abstractmethod 
+import abc
 from typing import Any
 
 # ecl: Error Correction Level(L,M,Q,H)
 
-class base_encoder(ABC):
+class BaseEncoder(abc.ABC):
     def __init__(self, ver, ecl, mode=None):
         self.ver = ver
         self.ecl = ecl
         self.mode = mode # 繼承的 class 有各自指定
+
+    @abc.abstractmethod
+    def _get_code(self, str) -> Any: 
+        raise NotImplementedError
 
     def _get_cci(self, str) -> str:
         if self.mode is None:
@@ -24,10 +28,6 @@ class base_encoder(ABC):
         cci = bin(len(str))[2:]
         cci = '0' * (cci_len - len(cci)) + cci
         return cci
-    
-    @abstractmethod
-    def _get_code(self, str) -> Any: 
-        pass
 
     def encode(self, str):
         code = mode_indicator[self.mode] + self._get_cci(str) + self._get_code(str)
