@@ -18,6 +18,7 @@ class NumericEncoder(BaseEncoder):
             code += ('0'*(rqbin_len - len(code_temp)) + code_temp)
         return code
 
+
 class AlphanumericEncoder(BaseEncoder):
     def __init__(self, ver, ecl):
         super().__init__(ver, ecl, mode='alphanumeric')
@@ -35,12 +36,14 @@ class AlphanumericEncoder(BaseEncoder):
             code += c
         return code
     
+
 class KanjiEncoder(BaseEncoder):
     def __init__(self, ver, ecl):
         super().__init__(ver, ecl, mode='kanji')
 
     def _get_code(self, str):
         pass
+
 
 class ByteEncoder(BaseEncoder):
     def __init__(self, ver, ecl):

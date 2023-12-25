@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from amzqr.mylibs import ECC, structure, matrix, draw
+from amzqr.mylibs import ECC, structure, draw
 from amzqr.mylibs.data.QRCodeEncoderFactory import QRCodeEncoderFactory
 from amzqr.mylibs.matrix.QRMatrixDirector import QRMatrixDirector
 
@@ -27,3 +27,4 @@ def get_qrcode(ver, ecl, str, save_place):
         
     # Draw the picture and Save it, then return the real ver and the absolute name
     return ver, draw.draw_qrcode(save_place, qrmatrix)
+

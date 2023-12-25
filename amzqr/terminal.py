@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from amzqr.amzqr import run
+
 import os
 
 def main():
@@ -32,7 +33,8 @@ def main():
             args.brightness,
             args.name,
             args.directory
-            )   
+            )    
+        
         print('Succeed! \nCheck out your', str(ver) + '-' + str(ecl), 'QR-code:', qr_name)
     except:
         raise

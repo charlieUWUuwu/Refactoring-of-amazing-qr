@@ -4,6 +4,13 @@
 import os
 from amzqr.mylibs import theqrmodule
 from PIL import Image
+
+"""
+
+考慮將 /mylibs/theqrmodule.py 合併過來
+並將 /mylibs/theqrmodule.py 移除
+
+"""
    
 # Positional parameters
 #   words: str
@@ -19,36 +26,56 @@ from PIL import Image
 #   save_dir: str, the output directory
 #
 # See [https://github.com/hwxhw/amazing-qr] for more details!
-def run(words, version=1, level='H', picture=None, colorized=False, contrast=1.0, brightness=1.0, save_name=None, save_dir=os.getcwd()):
 
-    supported_chars = r"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz ··,.:;+-*/\~!@#$%^&`'=<>[]()?_{}|"
+from dataclasses import dataclass
 
+@dataclass
+class QRCodeConfig:
+    words: str
+    version: int = 1
+    level: str = 'H'
+    picture: str = None
+    colorized: bool = False
+    contrast: float = 1.0
+    brightness: float = 1.0
+    save_name: str = None
+    save_dir: str = os.getcwd()
 
-    # check every parameter
-    if not isinstance(words, str) or any(i not in supported_chars for i in words):
-        raise ValueError('Wrong words! Make sure the characters are supported!')
-    if not isinstance(version, int) or version not in range(1, 41):
-        raise ValueError('Wrong version! Please choose a int-type value from 1 to 40!')
-    if not isinstance(level, str) or len(level)>1 or level not in 'LMQH':
-        raise ValueError("Wrong level! Please choose a str-type level from {'L','M','Q','H'}!")
-    if picture:
-        if not isinstance(picture, str) or not os.path.isfile(picture) or picture[-4:] not in ('.jpg','.png','.bmp','.gif'):
-            raise ValueError("Wrong picture! Input a filename that exists and be tailed with one of {'.jpg', '.png', '.bmp', '.gif'}!")
-        if picture[-4:] == '.gif' and save_name and save_name[-4:] != '.gif':
-            raise ValueError('Wrong save_name! If the picuter is .gif format, the output filename should be .gif format, too!')
-        if not isinstance(colorized, bool):
-            raise ValueError('Wrong colorized! Input a bool-type value!')
-        if not isinstance(contrast, float):
-            raise ValueError('Wrong contrast! Input a float-type value!')
-        if not isinstance(brightness, float):
-            raise ValueError('Wrong brightness! Input a float-type value!')
-    if save_name and (not isinstance(save_name, str) or save_name[-4:] not in ('.jpg','.png','.bmp','.gif')):
-        raise ValueError("Wrong save_name! Input a filename tailed with one of {'.jpg', '.png', '.bmp', '.gif'}!")
-    if not os.path.isdir(save_dir):
-        raise ValueError('Wrong save_dir! Input a existing-directory!')
-    
+    def __post_init__(self): # 實例初始化後被呼叫
+        self.check()
+
+    def check(self):
+        supported_chars = r"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz ··,.:;+-*/\~!@#$%^&`'=<>[]()?_{}|"
+
+        # check every parameter
+        if not isinstance(self.words, str) or any(i not in supported_chars for i in self.words):
+            raise ValueError('Wrong words! Make sure the characters are supported!')
+        if not isinstance(self.version, int) or self.version not in range(1, 41):
+            raise ValueError('Wrong version! Please choose a int-type value from 1 to 40!')
+        if not isinstance(self.level, str) or len(self.level)>1 or self.level not in 'LMQH':
+            raise ValueError("Wrong level! Please choose a str-type level from {'L','M','Q','H'}!")
+        if self.picture:
+            if not isinstance(self.picture, str) or not os.path.isfile(self.picture) or self.picture[-4:] not in ('.jpg','.png','.bmp','.gif'):
+                raise ValueError("Wrong picture! Input a filename that exists and be tailed with one of {'.jpg', '.png', '.bmp', '.gif'}!")
+            if self.picture[-4:] == '.gif' and self.save_name and self.save_name[-4:] != '.gif':
+                raise ValueError('Wrong save_name! If the picuter is .gif format, the output filename should be .gif format, too!')
+            if not isinstance(self.colorized, bool):
+                raise ValueError('Wrong colorized! Input a bool-type value!')
+            if not isinstance(self.contrast, float):
+                raise ValueError('Wrong contrast! Input a float-type value!')
+            if not isinstance(self.brightness, float):
+                raise ValueError('Wrong brightness! Input a float-type value!')
+        if self.save_name and (not isinstance(self.save_name, str) or self.save_name[-4:] not in ('.jpg','.png','.bmp','.gif')):
+            raise ValueError("Wrong save_name! Input a filename tailed with one of {'.jpg', '.png', '.bmp', '.gif'}!")
+        if not os.path.isdir(self.save_dir):
+            raise ValueError('Wrong save_dir! Input a existing-directory!')
+
+class QRStarter:
+    def __init__(self, params: QRCodeConfig):
+        self.params = params # QRParams
+
     # 組合 QR 碼與背景圖片(有指定背景圖片才會用到)
-    def combine(ver, qr_name, bg_name, colorized, contrast, brightness, save_dir, save_name=None):
+    def combine(self, ver, qr_name, bg_name, colorized, contrast, brightness, save_dir, save_name=None):
         from amzqr.mylibs.constant import alig_location
         from PIL import ImageEnhance, ImageFilter
 
@@ -57,7 +84,7 @@ def run(words, version=1, level='H', picture=None, colorized=False, contrast=1.0
         qr = qr.convert('RGBA') if colorized else qr
         # 打開背景圖片，並轉換為 RGBA 模式
         bg0 = Image.open(bg_name).convert('RGBA')
-         # 調整背景圖片的對比度和亮度
+        # 調整背景圖片的對比度和亮度
         bg0 = ImageEnhance.Contrast(bg0).enhance(contrast)
         bg0 = ImageEnhance.Brightness(bg0).enhance(brightness)
 
@@ -93,57 +120,61 @@ def run(words, version=1, level='H', picture=None, colorized=False, contrast=1.0
         qr.resize((qr.size[0]*3, qr.size[1]*3)).save(qr_name)
         return qr_name
 
-    # 生成 QR 碼，處理圖片，並保存最終結果
+    def _
 
-    # 創建暫時資料夾
-    tempdir = os.path.join(os.path.expanduser('~'), '.myqr')
-    
-    try:
-        if not os.path.exists(tempdir):
-            os.makedirs(tempdir)
 
-        ver, qr_name = theqrmodule.get_qrcode(version, level, words, tempdir)
-
-        if picture and picture[-4:]=='.gif':
-            import imageio
-             
-            im = Image.open(picture)
-            duration = im.info.get('duration', 0) # 獲取持續時間，如果沒有找到持續時間信息，則默認為 0
-            print("duration : ", duration)
-
-            # 將 GIF 的每幀保存為單獨的 PNG 文件
-            im.save(os.path.join(tempdir, '0.png'))
-            while True:
-                try:
-                    seq = im.tell() # 返回當前幀的索引
-                    im.seek(seq + 1)
-                    im.save(os.path.join(tempdir, '%s.png' %(seq+1)))
-                except EOFError: # 達文件末尾
-                    break
-            
-            # 為每幀生成 QR 碼並保存路徑
-            imsname = []
-            for s in range(seq+1):
-                bg_name = os.path.join(tempdir, '%s.png' % s)
-                imsname.append(combine(ver, qr_name, bg_name, colorized, contrast, brightness, tempdir))
-            # ims = [imageio.imread(pic) for pic in imsname]
-            ims = [Image.open(pic) if colorized else Image.open(pic).convert('L') for pic in imsname] # 當 colorized 為預設的 False，便將每張圖轉為灰度圖(0~255)
-
-            qr_name = os.path.join(save_dir, os.path.splitext(os.path.basename(picture))[0] + '_qrcode.gif') if not save_name else os.path.join(save_dir, save_name)
-            # imageio.mimwrite(qr_name, ims, '.gif', **{ 'duration': duration/1000 })
-            imageio.mimwrite(qr_name, ims, '.gif', **{ 'duration': duration, 'loop': 0 }) # 處理為原速播放，並設置為循環播放的 gif
-        elif picture:
-            qr_name = combine(ver, qr_name, picture, colorized, contrast, brightness, save_dir, save_name)
-        elif qr_name:
-            qr = Image.open(qr_name)
-            qr_name = os.path.join(save_dir, os.path.basename(qr_name)) if not save_name else os.path.join(save_dir, save_name)
-            qr.resize((qr.size[0]*3, qr.size[1]*3)).save(qr_name)
-        return ver, level, qr_name
+    def run(self):        
+        tempdir = os.path.join(os.path.expanduser('~'), '.myqr') # 創建暫時資料夾
         
-    except:
-        raise
-    # 處理臨時目錄和文件的清理
-    finally:
-        import shutil
-        if os.path.exists(tempdir):
-            shutil.rmtree(tempdir) 
+        # 生成 QR 碼，處理圖片，並保存最終結果
+        try:
+            if not os.path.exists(tempdir):
+                os.makedirs(tempdir)
+
+            ver, qr_name = theqrmodule.get_qrcode(self.params.version, self.params.level, self.params.words, tempdir)
+
+            if self.params.picture and self.params.picture[-4:]=='.gif':
+                import imageio
+                
+                im = Image.open(picture)
+                duration = im.info.get('duration', 0) # 獲取持續時間，如果沒有找到持續時間信息，則默認為 0
+                print("duration : ", duration)
+
+                # 將 GIF 的每幀保存為單獨的 PNG 文件
+                im.save(os.path.join(tempdir, '0.png'))
+                while True:
+                    try:
+                        seq = im.tell() # 返回當前幀的索引
+                        im.seek(seq + 1)
+                        im.save(os.path.join(tempdir, '%s.png' %(seq+1)))
+                    except EOFError: # 達文件末尾
+                        break
+                
+                # 為每幀生成 QR 碼並保存路徑
+                imsname = []
+                for s in range(seq+1):
+                    bg_name = os.path.join(tempdir, '%s.png' % s)
+                    imsname.append(combine(ver, qr_name, bg_name, colorized, contrast, brightness, tempdir))
+                # ims = [imageio.imread(pic) for pic in imsname]
+                ims = [Image.open(pic) if colorized else Image.open(pic).convert('L') for pic in imsname] # 當 colorized 為預設的 False，便將每張圖轉為灰度圖(0~255)
+
+                qr_name = os.path.join(save_dir, os.path.splitext(os.path.basename(picture))[0] + '_qrcode.gif') if not save_name else os.path.join(save_dir, save_name)
+                # imageio.mimwrite(qr_name, ims, '.gif', **{ 'duration': duration/1000 })
+                imageio.mimwrite(qr_name, ims, '.gif', **{ 'duration': duration, 'loop': 0 }) # 處理為原速播放，並設置為循環播放的 gif
+            elif self.params.picture:
+                qr_name = combine(ver, qr_name, picture, colorized, contrast, brightness, save_dir, save_name)
+            elif qr_name:
+                qr = Image.open(qr_name)
+                qr_name = os.path.join(save_dir, os.path.basename(qr_name)) if not save_name else os.path.join(save_dir, save_name)
+                qr.resize((qr.size[0]*3, qr.size[1]*3)).save(qr_name)
+            return ver, self.params.level, qr_name
+            
+        except:
+            raise
+        # 處理臨時目錄和文件的清理
+        finally:
+            import shutil
+            if os.path.exists(tempdir):
+                shutil.rmtree(tempdir) 
+
+

@@ -7,7 +7,7 @@ class QRMatrixBuilder(abc.ABC):
         self.bits =bits
 
         self.mask_num = None
-        self.maskmatrix = None
+        self._maskmatrix = None
 
         num = (ver - 1) * 4 + 21
         self.qrmatrix =  [[None] * num for i in range(num)]
