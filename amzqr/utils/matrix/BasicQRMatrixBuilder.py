@@ -1,4 +1,4 @@
-from amzqr.mylibs.constant import alig_location, format_info_str, version_info_str, lindex
+from amzqr.utils.constant import alig_location, format_info_str, version_info_str, lindex
 from .evaluations import Scorer
 from .QRMatrixBuilder import QRMatrixBuilder
 

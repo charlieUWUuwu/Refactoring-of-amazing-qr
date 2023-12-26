@@ -1,4 +1,4 @@
-from amzqr.mylibs.constant import required_bytes, mindex, lindex, grouping_list, mode_indicator
+from amzqr.utils.constant import required_bytes, mindex, lindex, grouping_list, mode_indicator
 import abc
 from typing import Any
 

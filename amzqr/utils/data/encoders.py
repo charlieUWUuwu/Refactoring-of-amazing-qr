@@ -1,4 +1,4 @@
-from amzqr.mylibs.constant import alphanum_list
+from amzqr.utils.constant import alphanum_list
 from .BaseEncoder import BaseEncoder
 
 class NumericEncoder(BaseEncoder):

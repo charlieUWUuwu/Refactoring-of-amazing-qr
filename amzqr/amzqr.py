@@ -2,16 +2,10 @@
 # -*- coding: utf-8 -*-
 
 import os
+# from amzqr.utils import theqrmodule
 from amzqr.mylibs import theqrmodule
 from PIL import Image
 
-"""
-
-考慮將 /mylibs/theqrmodule.py 合併過來
-並將 /mylibs/theqrmodule.py 移除
-
-"""
-   
 # Positional parameters
 #   words: str
 #
@@ -27,48 +21,7 @@ from PIL import Image
 #
 # See [https://github.com/hwxhw/amazing-qr] for more details!
 
-from dataclasses import dataclass
-
-@dataclass
-class QRCodeConfig:
-    words: str
-    version: int = 1
-    level: str = 'H'
-    picture: str = None
-    colorized: bool = False
-    contrast: float = 1.0
-    brightness: float = 1.0
-    save_name: str = None
-    save_dir: str = os.getcwd()
-
-    def __post_init__(self): # 實例初始化後被呼叫
-        self.check()
-
-    def check(self):
-        supported_chars = r"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz ··,.:;+-*/\~!@#$%^&`'=<>[]()?_{}|"
-
-        # check every parameter
-        if not isinstance(self.words, str) or any(i not in supported_chars for i in self.words):
-            raise ValueError('Wrong words! Make sure the characters are supported!')
-        if not isinstance(self.version, int) or self.version not in range(1, 41):
-            raise ValueError('Wrong version! Please choose a int-type value from 1 to 40!')
-        if not isinstance(self.level, str) or len(self.level)>1 or self.level not in 'LMQH':
-            raise ValueError("Wrong level! Please choose a str-type level from {'L','M','Q','H'}!")
-        if self.picture:
-            if not isinstance(self.picture, str) or not os.path.isfile(self.picture) or self.picture[-4:] not in ('.jpg','.png','.bmp','.gif'):
-                raise ValueError("Wrong picture! Input a filename that exists and be tailed with one of {'.jpg', '.png', '.bmp', '.gif'}!")
-            if self.picture[-4:] == '.gif' and self.save_name and self.save_name[-4:] != '.gif':
-                raise ValueError('Wrong save_name! If the picuter is .gif format, the output filename should be .gif format, too!')
-            if not isinstance(self.colorized, bool):
-                raise ValueError('Wrong colorized! Input a bool-type value!')
-            if not isinstance(self.contrast, float):
-                raise ValueError('Wrong contrast! Input a float-type value!')
-            if not isinstance(self.brightness, float):
-                raise ValueError('Wrong brightness! Input a float-type value!')
-        if self.save_name and (not isinstance(self.save_name, str) or self.save_name[-4:] not in ('.jpg','.png','.bmp','.gif')):
-            raise ValueError("Wrong save_name! Input a filename tailed with one of {'.jpg', '.png', '.bmp', '.gif'}!")
-        if not os.path.isdir(self.save_dir):
-            raise ValueError('Wrong save_dir! Input a existing-directory!')
+from amzqr.mylibs.QRCodeConfig import QRCodeConfig
 
 class QRStarter:
     def __init__(self, params: QRCodeConfig):
@@ -76,7 +29,7 @@ class QRStarter:
 
     # 組合 QR 碼與背景圖片(有指定背景圖片才會用到)
     def combine(self, ver, qr_name, bg_name, colorized, contrast, brightness, save_dir, save_name=None):
-        from amzqr.mylibs.constant import alig_location
+        from amzqr.utils.constant import alig_location
         from PIL import ImageEnhance, ImageFilter
 
         # 打開 QR 碼圖片，並根據 colorized 參數決定是否轉換為 RGBA 模式
@@ -120,7 +73,7 @@ class QRStarter:
         qr.resize((qr.size[0]*3, qr.size[1]*3)).save(qr_name)
         return qr_name
 
-    def _
+    def make_qrcode(self):
 
 
     def run(self):        
@@ -167,6 +120,7 @@ class QRStarter:
                 qr = Image.open(qr_name)
                 qr_name = os.path.join(save_dir, os.path.basename(qr_name)) if not save_name else os.path.join(save_dir, save_name)
                 qr.resize((qr.size[0]*3, qr.size[1]*3)).save(qr_name)
+
             return ver, self.params.level, qr_name
             
         except:
