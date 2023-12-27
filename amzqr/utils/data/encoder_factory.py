@@ -1,7 +1,12 @@
 from amzqr.utils.constant import char_cap, mindex, num_list, alphanum_list
-from .encoders import ByteEncoder, KanjiEncoder, NumericEncoder, AlphanumericEncoder
 
-class QRCodeEncoderFactory:
+from .encoders.byte_encoder import ByteEncoder
+from .encoders.kanji_encoder import KanjiEncoder
+from .encoders.numeric_encoder import NumericEncoder
+from .encoders.alphanumeric_encoder import AlphanumericEncoder
+
+
+class EncoderFactory:
     @staticmethod
     def get_encoder(ver, ecl, str):
         new_ver, mode = analyse(ver, ecl, str)  # Determine the mode based on data

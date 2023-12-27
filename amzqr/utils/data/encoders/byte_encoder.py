@@ -1,5 +1,4 @@
-from amzqr.utils.constant import alphanum_list
-from ..BaseEncoder import BaseEncoder
+from ..base_encoder import BaseEncoder
 
 class ByteEncoder(BaseEncoder):
     def __init__(self, ver, ecl):

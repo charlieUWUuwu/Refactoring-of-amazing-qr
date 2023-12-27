@@ -1,4 +1,4 @@
-from .BasicQRMatrixBuilder import BasicQRMatrixBuilder
+from .basic_qrmatrix_builder import BasicQRMatrixBuilder
 
 class QRMatrixDirector:
     def __init__(self):

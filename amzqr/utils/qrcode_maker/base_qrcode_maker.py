@@ -1,9 +1,9 @@
-from amzqr.utils.QRCodeConfig import QRCodeConfig
-import abc
-import Image
-import os
+from amzqr.utils.qrcode_config import QRCodeConfig
+from PIL import Image
 from typing import Tuple
 
+import abc
+import os
 
 class BaseQRCodeMaker(abc.ABC):
     def __init__(self, params: QRCodeConfig):

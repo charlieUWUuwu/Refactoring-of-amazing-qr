@@ -1,6 +1,7 @@
-from amzqr.utils.QRCodeConfig import QRCodeConfig
-from ..BaseQRCodeMaker import BaseQRCodeMaker
-import Image
+from amzqr.utils.qrcode_config import QRCodeConfig
+from ..base_qrcode_maker import BaseQRCodeMaker
+from typing import Tuple
+from PIL import Image
 import os
 
 class GIFQRCodeMaker(BaseQRCodeMaker):

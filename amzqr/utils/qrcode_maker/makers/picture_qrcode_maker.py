@@ -1,5 +1,5 @@
-from amzqr.utils.QRCodeConfig import QRCodeConfig
-from ..BaseQRCodeMaker import BaseQRCodeMaker
+from amzqr.utils.qrcode_config import QRCodeConfig
+from ..base_qrcode_maker import BaseQRCodeMaker
 import os
 
 class PictureQRCodeMaker(BaseQRCodeMaker):

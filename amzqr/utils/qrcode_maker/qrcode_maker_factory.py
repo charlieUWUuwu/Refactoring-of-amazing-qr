@@ -1,6 +1,9 @@
-from .makers import BasicQRCodeMaker, PictureQRCodeMaker, GIFQRCodeMaker
-from .BaseQRCodeMaker import BaseQRCodeMaker
-from amzqr.utils.QRCodeConfig import QRCodeConfig
+from .makers.basic_qrcode_maker import BasicQRCodeMaker
+from .makers.picture_qrcode_maker import PictureQRCodeMaker
+from .makers.gif_qrcode_maker import GIFQRCodeMaker
+
+from .base_qrcode_maker import BaseQRCodeMaker
+from amzqr.utils.qrcode_config import QRCodeConfig
 
 class QRCodeMakerFactory:
     @staticmethod

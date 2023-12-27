@@ -2,9 +2,9 @@
 
 from amzqr.utils import structure
 from amzqr.utils.ECC import ECC
-from amzqr.utils.data.QRCodeEncoderFactory import QRCodeEncoderFactory
-from amzqr.utils.draw import QRCodeDrawer
-from amzqr.utils.matrix.QRMatrixDirector import QRMatrixDirector
+from amzqr.utils.data.encoder_factory import EncoderFactory
+from amzqr.utils.draw.qrcode_drawer import QRCodeDrawer
+from amzqr.utils.matrix.qrmatrix_director import QRMatrixDirector
 
 # ver: Version from 1 to 40
 # ecl: Error Correction Level (L,M,Q,H)
@@ -13,7 +13,7 @@ from amzqr.utils.matrix.QRMatrixDirector import QRMatrixDirector
 def get_qrcode(ver, ecl, str, save_place):
     # Data Coding
     # ver, data_codewords = data.encode(ver, ecl, str)
-    encoder = QRCodeEncoderFactory.get_encoder(ver, ecl, str)
+    encoder = EncoderFactory.get_encoder(ver, ecl, str)
     new_ver, data_codewords = encoder.encode(str)
 
     # Error Correction Coding
