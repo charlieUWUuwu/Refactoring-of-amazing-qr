@@ -4,23 +4,24 @@ from .encoders import ByteEncoder, KanjiEncoder, NumericEncoder, AlphanumericEnc
 class QRCodeEncoderFactory:
     @staticmethod
     def get_encoder(ver, ecl, str):
-        ver, mode = analyse(ver, ecl, str)  # Determine the mode based on data
+        new_ver, mode = analyse(ver, ecl, str)  # Determine the mode based on data
         print('line 16: mode:', mode)
 
         if mode == 'numeric':
-            return NumericEncoder(ver, ecl)
+            return NumericEncoder(new_ver, ecl)
         elif mode == 'alphanumeric':
-            return AlphanumericEncoder(ver, ecl)
+            return AlphanumericEncoder(new_ver, ecl)
         elif mode == 'byte':
-            return ByteEncoder(ver, ecl)
+            return ByteEncoder(new_ver, ecl)
         elif mode == 'kanji':
-            return KanjiEncoder(ver, ecl)
+            return KanjiEncoder(new_ver, ecl)
         else:
             raise ValueError("Unsupported mode determined by analysis")
         
         
 # 根據 str 分析種類
 def analyse(ver, ecl, str):
+    new_ver = ver
     if all(i in num_list for i in str):
         mode = 'numeric'
     elif all(i in alphanum_list for i in str):
@@ -32,6 +33,6 @@ def analyse(ver, ecl, str):
     l = len(str)
     for i in range(40):
         if char_cap[ecl][i][m] > l:
-            ver = i + 1 if i+1 > ver else ver
+            new_ver = i + 1 if i+1 > new_ver else new_ver
             break
-    return ver, mode
+    return new_ver, mode

@@ -34,7 +34,6 @@ def main():
             args.name,
             args.directory
             )    
-        
         print('Succeed! \nCheck out your', str(ver) + '-' + str(ecl), 'QR-code:', qr_name)
     except:
         raise
