@@ -25,7 +25,7 @@ class BaseQRCodeMaker(abc.ABC):
         return new_ver, qr_name
     
     # 組合 QR 碼與背景圖片(有指定背景圖片才會用到)
-    def _combine(self, ver, qr_name, bg_name, save_name=None):
+    def _combine(self, ver, qr_name, bg_name, save_dir, save_name=None):
         from amzqr.utils.constant import alig_location
         from PIL import ImageEnhance, ImageFilter
 
@@ -61,7 +61,7 @@ class BaseQRCodeMaker(abc.ABC):
                     qr.putpixel((i+12,j+12), bg.getpixel((i,j)))
         
         # 保存結合後的圖片，並回傳圖片名
-        qr_name = os.path.join(self.params.save_dir, os.path.splitext(os.path.basename(bg_name))[0] + '_qrcode.png') if not save_name else os.path.join(self.params.save_dir, save_name)
+        qr_name = os.path.join(save_dir, os.path.splitext(os.path.basename(bg_name))[0] + '_qrcode.png') if not save_name else os.path.join(save_dir, save_name)
         qr.resize((qr.size[0]*3, qr.size[1]*3)).save(qr_name)
         return qr_name
     
