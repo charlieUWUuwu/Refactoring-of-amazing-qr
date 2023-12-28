@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from amzqr.utils import structure
-from amzqr.utils.ECC import ECC
-from amzqr.utils.data.encoder_factory import EncoderFactory
-from amzqr.utils.draw.qrcode_drawer import QRCodeDrawer
-from amzqr.utils.matrix.qrmatrix_director import QRMatrixDirector
+from amzqr.mylibs import structure
+from amzqr.mylibs.ECC import ECC
+from amzqr.mylibs.data.encoder_factory import EncoderFactory
+from amzqr.mylibs.draw.qrcode_drawer import QRCodeDrawer
+from amzqr.mylibs.matrix.qrmatrix_director import QRMatrixDirector
 
 # ver: Version from 1 to 40
 # ecl: Error Correction Level (L,M,Q,H)

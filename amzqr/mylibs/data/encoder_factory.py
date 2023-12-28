@@ -1,4 +1,4 @@
-from amzqr.utils.constant import char_cap, mindex, num_list, alphanum_list
+from amzqr.mylibs.constant import char_cap, mindex, num_list, alphanum_list
 
 from .encoders.byte_encoder import ByteEncoder
 from .encoders.kanji_encoder import KanjiEncoder

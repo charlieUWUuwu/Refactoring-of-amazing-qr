@@ -1,4 +1,4 @@
-from amzqr.utils.qrcode_config import QRCodeConfig
+from amzqr.mylibs.qrcode_config import QRCodeConfig
 from ..base_qrcode_maker import BaseQRCodeMaker
 import os
 

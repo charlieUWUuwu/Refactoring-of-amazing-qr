@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from amzqr.utils.constant import required_remainder_bits, lindex, grouping_list
+from amzqr.mylibs.constant import required_remainder_bits, lindex, grouping_list
 
 def structure_final_bits(ver, ecl, data_codewords, ecc):
     final_message = _interleave_dc(ver, ecl, data_codewords) + _interleave_ecc(ecc)

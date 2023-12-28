@@ -3,7 +3,7 @@ from .makers.picture_qrcode_maker import PictureQRCodeMaker
 from .makers.gif_qrcode_maker import GIFQRCodeMaker
 
 from .base_qrcode_maker import BaseQRCodeMaker
-from amzqr.utils.qrcode_config import QRCodeConfig
+from amzqr.mylibs.qrcode_config import QRCodeConfig
 
 class QRCodeMakerFactory:
     @staticmethod

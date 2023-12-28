@@ -17,8 +17,8 @@
 # See [https://github.com/hwxhw/amazing-qr] for more details!
 
 import os
-from amzqr.utils.qrcode_config import QRCodeConfig
-from amzqr.utils.qrcode_maker.qrcode_maker_factory import QRCodeMakerFactory
+from amzqr.mylibs.qrcode_config import QRCodeConfig
+from amzqr.mylibs.qrcode_maker.qrcode_maker_factory import QRCodeMakerFactory
 
 def main():
     import argparse

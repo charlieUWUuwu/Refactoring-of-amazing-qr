@@ -1,4 +1,4 @@
-from amzqr.utils.qrcode_config import QRCodeConfig
+from amzqr.mylibs.qrcode_config import QRCodeConfig
 from PIL import Image
 from typing import Tuple
 
@@ -20,12 +20,12 @@ class BaseQRCodeMaker(abc.ABC):
         return tempdir
     
     def _get_qrcode(self, dir):
-        from amzqr.utils import theqrmodule
+        from amzqr.mylibs import theqrmodule
         new_ver, qr_name = theqrmodule.get_qrcode(self.params.version, self.params.level, self.params.words, dir)
         return new_ver, qr_name
     
     def _combine(self, ver, qr_name, bg_name, save_dir, save_name=None):
-        from amzqr.utils.constant import alig_location
+        from amzqr.mylibs.constant import alig_location
         from PIL import ImageEnhance, ImageFilter
 
         qr = Image.open(qr_name)
