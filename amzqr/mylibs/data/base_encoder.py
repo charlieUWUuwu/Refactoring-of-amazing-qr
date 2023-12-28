@@ -8,7 +8,7 @@ class BaseEncoder(abc.ABC):
     def __init__(self, ver, ecl, mode=None):
         self.ver = ver
         self.ecl = ecl
-        self.mode = mode # 繼承的 class 有各自指定
+        self.mode = mode
 
     @abc.abstractmethod
     def _get_code(self, str) -> Any: 
