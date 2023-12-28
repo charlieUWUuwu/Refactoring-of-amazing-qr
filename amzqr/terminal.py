@@ -20,12 +20,6 @@ import os
 from amzqr.utils.qrcode_config import QRCodeConfig
 from amzqr.utils.qrcode_maker.qrcode_maker_factory import QRCodeMakerFactory
 
-# def run(words, version=1, level='H', picture=None, colorized=False, contrast=1.0, brightness=1.0, save_name=None, save_dir=os.getcwd()):
-#     myConfig = QRCodeConfig(words, version, level, picture, colorized, contrast, brightness, save_name, save_dir)
-#     maker = QRCodeMakerFactory(myConfig)
-#     ver, ecl, qr_name = maker.run()
-#     return ver, ecl, qr_name
-
 def main():
     import argparse
     argparser = argparse.ArgumentParser()

@@ -12,7 +12,6 @@ from amzqr.utils.matrix.qrmatrix_director import QRMatrixDirector
 # get a qrcode picture of 3*3 pixels per module
 def get_qrcode(ver, ecl, str, save_place):
     # Data Coding
-    # ver, data_codewords = data.encode(ver, ecl, str)
     encoder = EncoderFactory.get_encoder(ver, ecl, str)
     new_ver, data_codewords = encoder.encode(str)
 
@@ -25,7 +24,6 @@ def get_qrcode(ver, ecl, str, save_place):
     # Get the QR Matrix
     director = QRMatrixDirector()
     qrmatrix = director.get_qrmatrix(new_ver, ecl, final_bits)
-    # qrmatrix = matrix.get_qrmatrix(new_ver, ecl, final_bits)
         
     # Draw the picture and Save it, then return the real ver and the absolute name
     return new_ver, QRCodeDrawer.draw_qrcode(save_place, qrmatrix)

@@ -2,7 +2,6 @@ from amzqr.utils.constant import alig_location, format_info_str, version_info_st
 from .evaluations import Scorer
 from .qrmatrix_builder import QRMatrixBuilder
 
-# 具體實現
 class BasicQRMatrixBuilder(QRMatrixBuilder):
     # override
     def add_finder_and_separator(self):
