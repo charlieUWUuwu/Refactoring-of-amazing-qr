@@ -4,7 +4,7 @@ class NumericEncoder(BaseEncoder):
     def __init__(self, ver, ecl):
         super().__init__(ver, ecl, mode='numeric')
 
-    def _get_code(self, str):
+    def get_code(self, str):
         str_list = [str[i:i+3] for i in range(0,len(str),3)]
         code = ''
         for i in str_list:

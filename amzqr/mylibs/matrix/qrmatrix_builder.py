@@ -4,7 +4,7 @@ class QRMatrixBuilder(abc.ABC):
     def reset(self, ver, ecl, bits):
         self.ver = ver
         self.ecl = ecl
-        self.bits =bits
+        self.bits = bits
 
         self.mask_num = None
         self._maskmatrix = None

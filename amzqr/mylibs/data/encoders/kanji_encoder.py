@@ -4,5 +4,5 @@ class KanjiEncoder(BaseEncoder):
     def __init__(self, ver, ecl):
         super().__init__(ver, ecl, mode='kanji')
 
-    def _get_code(self, str):
+    def get_code(self, str):
         pass

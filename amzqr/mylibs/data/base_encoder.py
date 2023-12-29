@@ -11,7 +11,7 @@ class BaseEncoder(abc.ABC):
         self.mode = mode
 
     @abc.abstractmethod
-    def _get_code(self, str) -> Any: 
+    def get_code(self, str) -> Any: 
         raise NotImplementedError
 
     def _get_cci(self, str) -> str:
@@ -30,7 +30,7 @@ class BaseEncoder(abc.ABC):
         return cci
 
     def encode(self, str):
-        code = mode_indicator[self.mode] + self._get_cci(str) + self._get_code(str)
+        code = mode_indicator[self.mode] + self._get_cci(str) + self.get_code(str)
         
         # Add a Terminator
         rqbits = 8 * required_bytes[self.ver-1][lindex[self.ecl]]

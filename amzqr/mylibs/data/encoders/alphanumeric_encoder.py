@@ -5,7 +5,7 @@ class AlphanumericEncoder(BaseEncoder):
     def __init__(self, ver, ecl):
         super().__init__(ver, ecl, mode='alphanumeric')
 
-    def _get_code(self, str):
+    def get_code(self, str):
         code_list = [alphanum_list.index(i) for i in str]
         code = ''
         for i in range(1, len(code_list), 2):
