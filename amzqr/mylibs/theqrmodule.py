@@ -22,8 +22,7 @@ def get_qrcode(ver, ecl, str, save_place):
     final_bits = structure.structure_final_bits(new_ver, ecl, data_codewords, ecc)
     
     # Get the QR Matrix
-    director = QRMatrixDirector()
-    qrmatrix = director.get_qrmatrix(new_ver, ecl, final_bits)
+    qrmatrix = QRMatrixDirector().get_qrmatrix(new_ver, ecl, final_bits)
         
     # Draw the picture and Save it, then return the real ver and the absolute name
     return new_ver, QRCodeDrawer.draw_qrcode(save_place, qrmatrix)

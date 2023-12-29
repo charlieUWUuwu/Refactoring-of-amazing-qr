@@ -1,0 +1,11 @@
+# 普通
+python amzqr.py https://youtube.com -v 8 -n output1.png
+
+# 黑白
+python amzqr.py https://youtube.com -v 4 -p test1.png -n output2.png
+
+# 彩色
+python amzqr.py https://youtube.com -v 4 -p test1.png -n output3.png -c
+
+# gif 彩色
+python amzqr.py https://youtube.com -v 8 -p test2.gif -n output4.gif -c
