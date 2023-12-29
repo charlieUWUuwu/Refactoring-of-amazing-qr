@@ -11,7 +11,7 @@ class BaseEncoder(abc.ABC):
         self.mode = mode
 
     @abc.abstractmethod
-    def get_code(self, str) -> Any: 
+    def get_code(self, str) -> str: 
         raise NotImplementedError
 
     def _get_cci(self, str) -> str:
