@@ -9,7 +9,24 @@ from .encoders.alphanumeric_encoder import AlphanumericEncoder
 class EncoderFactory:
     @staticmethod
     def get_encoder(ver, ecl, str):
-        new_ver, mode = analyse(ver, ecl, str)  # Determine the mode based on data
+        def _analyse(ver, ecl, str):
+            new_ver = ver
+            if all(i in num_list for i in str):
+                mode = 'numeric'
+            elif all(i in alphanum_list for i in str):
+                mode = 'alphanumeric'
+            else:
+                mode = 'byte'
+            
+            m = mindex[mode]
+            l = len(str)
+            for i in range(40):
+                if char_cap[ecl][i][m] > l:
+                    new_ver = i + 1 if i+1 > new_ver else new_ver
+                    break
+            return new_ver, mode
+        
+        new_ver, mode = _analyse(ver, ecl, str)  # Determine the mode based on data
         print('line 16: mode:', mode)
 
         if mode == 'numeric':
@@ -23,21 +40,4 @@ class EncoderFactory:
         else:
             raise ValueError("Unsupported mode determined by analysis")
         
-        
-# 根據 str 分析種類
-def analyse(ver, ecl, str):
-    new_ver = ver
-    if all(i in num_list for i in str):
-        mode = 'numeric'
-    elif all(i in alphanum_list for i in str):
-        mode = 'alphanumeric'
-    else:
-        mode = 'byte'
     
-    m = mindex[mode]
-    l = len(str)
-    for i in range(40):
-        if char_cap[ecl][i][m] > l:
-            new_ver = i + 1 if i+1 > new_ver else new_ver
-            break
-    return new_ver, mode
