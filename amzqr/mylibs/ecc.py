@@ -8,17 +8,17 @@ class ECC:
         en = ecc_num_per_block[ver-1][lindex[ecl]]
         ecc = []
         for dc in data_codewords:
-            ecc.append(self.__get_ecc(dc, en))
+            ecc.append(self._get_ecc(dc, en))
         return ecc
 
-    def __get_ecc(self, dc, ecc_num):
+    def _get_ecc(self, dc, ecc_num):
         gp = GP_list[ecc_num]
         remainder = dc
         for i in range(len(dc)):
-            remainder = self.__divide(remainder, *gp)
+            remainder = self._divide(remainder, *gp)
         return remainder
         
-    def __divide(self, MP, *GP):
+    def _divide(self, MP, *GP):
         if MP[0]:
             GP = list(GP)
             for i in range(len(GP)):
@@ -26,12 +26,12 @@ class ECC:
                 if GP[i] > 255:
                     GP[i] %= 255
                 GP[i] = po2[GP[i]]
-            return self.__XOR(GP, *MP)
+            return self._XOR(GP, *MP)
         else:
-            return self.__XOR([0]*len(GP), *MP)
+            return self._XOR([0]*len(GP), *MP)
         
         
-    def __XOR(self, GP, *MP):
+    def _XOR(self, GP, *MP):
         MP = list(MP)
         a = len(MP) - len(GP)
         if a < 0:
