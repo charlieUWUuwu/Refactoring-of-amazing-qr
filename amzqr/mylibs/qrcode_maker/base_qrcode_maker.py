@@ -7,7 +7,7 @@ import os
 
 class BaseQRCodeMaker(abc.ABC):
     def __init__(self, params: QRCodeConfig):
-        self.params = params
+        self._params = params
 
     @abc.abstractmethod
     def run(self) -> Tuple[int, str, str]:
@@ -21,25 +21,25 @@ class BaseQRCodeMaker(abc.ABC):
     
     def _get_qrcode(self, dir):
         from amzqr.mylibs import theqrmodule
-        new_ver, qr_name = theqrmodule.get_qrcode(self.params.version, self.params.level, self.params.words, dir)
+        new_ver, qr_name = theqrmodule.get_qrcode(self._params.version, self._params.level, self._params.words, dir)
         return new_ver, qr_name
     
     def _combine(self, ver, qr_name, bg_name, save_dir, save_name=None):
         from amzqr.mylibs.constant import alig_location
-        from PIL import ImageEnhance, ImageFilter
+        from PIL import ImageEnhance
 
         qr = Image.open(qr_name)
-        qr = qr.convert('RGBA') if self.params.colorized else qr
+        qr = qr.convert('RGBA') if self._params.colorized else qr
         bg0 = Image.open(bg_name).convert('RGBA')
-        bg0 = ImageEnhance.Contrast(bg0).enhance(self.params.contrast)
-        bg0 = ImageEnhance.Brightness(bg0).enhance(self.params.brightness)
+        bg0 = ImageEnhance.Contrast(bg0).enhance(self._params.contrast)
+        bg0 = ImageEnhance.Brightness(bg0).enhance(self._params.brightness)
 
         # 調整背景圖片的大小以適應 QR 碼圖片的大小
         if bg0.size[0] < bg0.size[1]:
             bg0 = bg0.resize((qr.size[0]-24, (qr.size[0]-24)*int(bg0.size[1]/bg0.size[0])))
         else:
             bg0 = bg0.resize(((qr.size[1]-24)*int(bg0.size[0]/bg0.size[1]), qr.size[1]-24))    
-        bg = bg0 if self.params.colorized else bg0.convert('1')
+        bg = bg0 if self._params.colorized else bg0.convert('1')
         
         # 初始化用於定位 QR 碼對齊圖案的列表
         aligs = []
