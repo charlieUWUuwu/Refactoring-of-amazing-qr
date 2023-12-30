@@ -20,8 +20,8 @@ class BaseQRCodeMaker(abc.ABC):
         return tempdir
     
     def _get_qrcode(self, dir):
-        from amzqr.mylibs import theqrmodule
-        new_ver, qr_name = theqrmodule.get_qrcode(self._params.version, self._params.level, self._params.words, dir)
+        from amzqr.mylibs.theqrmodule import TheQRModule
+        new_ver, qr_name = TheQRModule.get_qrcode(self._params.version, self._params.level, self._params.words, dir)
         return new_ver, qr_name
     
     def _combine(self, ver, qr_name, bg_name, save_dir, save_name=None):
